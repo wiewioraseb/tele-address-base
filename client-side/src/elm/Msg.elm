@@ -1,5 +1,5 @@
 module Msg exposing ( Msg(..) )
 
 -- UPDATE
-type Msg = NoOp | Increment | Decrement
+type Msg = NoOp | Increment | Decrement | ToggleNotifications
 
