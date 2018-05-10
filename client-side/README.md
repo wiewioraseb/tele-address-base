@@ -1,8 +1,6 @@
 ## Based on elm-webpack-starter-kid
 
-A very very basic elm 0.18 and webpack 4 boilerplate
-
-Light & fast. Bare minimum of code. Up-to-date dependencies.
+Starter of bare minimum of code. Up-to-date dependencies.
 
 # How to run
 ```
@@ -11,3 +9,17 @@ cd client-side
 npm i \
 npm start
 ```
+
+# Knowledge sources
+
+A curated list of useful Elm tutorials, libraries and software:  
+https://github.com/isRuslan/awesome-elm
+
+How to talk to Javascript:  
+https://guide.elm-lang.org/interop/javascript.html 
+
+YouTube Elm tutorial:
+https://www.youtube.com/watch?v=zBHB9i8e3Kc
+
+Elm project consuming PokéAPI:
+https://github.com/brenopanzolini/pokelmon
