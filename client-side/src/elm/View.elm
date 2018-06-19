@@ -16,8 +16,15 @@ view model =
         [ button [onClick Increment] [ text ("Add 1 to " ++ toString model.intValue) ]
         , button [onClick Decrement] [ text ("Subtract 1 from " ++ toString model.intValue) ]
         , checkbox ToggleNotifications "Accept company rules."
+        , br [] []
+        , input [ placeholder "Name", onInput Change  ] [ ]
+        , br [] []
         , input [ placeholder "Surname", onInput Change  ] [ ]
         , div [] [ text (String.reverse model.surname) ]
+        , br [] []
+        , input [ placeholder "Telephone", onInput Change  ] [ ]
+        , br [] []
+        , input [ placeholder "Email", onInput Change  ] [ ]
         ]
   
 checkbox : msg -> String -> Html msg
