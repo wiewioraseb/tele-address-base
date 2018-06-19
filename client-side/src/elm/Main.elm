@@ -27,8 +27,8 @@ update msg model =
     ToggleNotifications ->
         { model | tickBool = not model.tickBool }
 
-    Change newStringToReverse ->
-        { model | stringToReverse = newStringToReverse }
+    Change newSurname ->
+        { model | surname = newSurname }
 
     NoOp ->
         model

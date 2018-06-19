@@ -15,9 +15,9 @@ view model =
     div []
         [ button [onClick Increment] [ text ("Add 1 to " ++ toString model.intValue) ]
         , button [onClick Decrement] [ text ("Subtract 1 from " ++ toString model.intValue) ]
-        , checkbox ToggleNotifications "Email Notifications"
-        , input [ placeholder "Text to reverse", onInput Change  ] [ ]
-        , div [] [ text (String.reverse model.stringToReverse) ]
+        , checkbox ToggleNotifications "Accept company rules."
+        , input [ placeholder "Surname", onInput Change  ] [ ]
+        , div [] [ text (String.reverse model.surname) ]
         ]
   
 checkbox : msg -> String -> Html msg

@@ -3,5 +3,5 @@ module Model exposing ( Model )
 type alias Model =
     { intValue : Int
     , tickBool : Bool
-    , stringToReverse: String
+    , surname: String
     }
