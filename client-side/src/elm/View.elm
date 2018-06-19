@@ -1,10 +1,11 @@
 module View exposing ( view )
 
 import Html exposing (..)
-import Html.Attributes exposing (style, type_)
-import Html.Events exposing ( onClick )
+import Html.Attributes exposing (placeholder, style, type_)
+import Html.Events exposing (onClick, onInput)
 import Model exposing ( Model )
 import Msg exposing ( Msg(..) )
+
 
 -- VIEW
 -- Html is defined as: elem [ attribs ][ children ]
@@ -15,6 +16,8 @@ view model =
         [ button [onClick Increment] [ text ("Add 1 to " ++ toString model.intValue) ]
         , button [onClick Decrement] [ text ("Subtract 1 from " ++ toString model.intValue) ]
         , checkbox ToggleNotifications "Email Notifications"
+        , input [ placeholder "Text to reverse", onInput Change  ] [ ]
+        , div [] [ text (String.reverse model.stringToReverse) ]
         ]
   
 checkbox : msg -> String -> Html msg

@@ -6,13 +6,14 @@ import View exposing ( view )
 import Model exposing ( Model )
 import Msg exposing ( Msg(..) )
 
+
 -- APP
 main : Program Never Model Msg
 main =
   Html.beginnerProgram { model = model, view = view, update = update }
 
 model : Model
-model = Model 0 True
+model = Model 0 True ""
 
 update : Msg -> Model -> Model
 update msg model =
@@ -25,6 +26,9 @@ update msg model =
 
     ToggleNotifications ->
         { model | tickBool = not model.tickBool }
+
+    Change newStringToReverse ->
+        { model | stringToReverse = newStringToReverse }
 
     NoOp ->
         model
