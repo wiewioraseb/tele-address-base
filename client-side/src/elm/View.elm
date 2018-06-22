@@ -14,7 +14,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ input [ placeholder "Name", onInput Name  ] [ ]
-        , br [] []
+        , viewNameValidation model
         , input [ placeholder "Surname", onInput Surname  ] [ ]
         , div [] [ text (String.reverse model.surname) ]
         , br [] []
@@ -27,6 +27,18 @@ view model =
         , checkbox AcceptCompanyRules "Accept company rules."
         ]
 
+viewNameValidation : Model -> Html msg
+viewNameValidation model =
+    let
+        (color, message) =
+            if model.name == "cze" then
+                ("green", "OK")
+            else
+                ("red", "Wrong name")
+    in
+        div [ style [("color", color)] ] [ text message ]
+
+
 checkbox : msg -> String -> Html msg
 checkbox msg name =
   label
@@ -35,3 +47,4 @@ checkbox msg name =
     [ input [ type_ "checkbox", onClick msg ] []
     , text name
     ]
+
