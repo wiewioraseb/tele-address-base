@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+import Date exposing (Date)
 import Html
 
 import View exposing ( view )
@@ -13,7 +14,7 @@ main =
   Html.beginnerProgram { model = model, view = view, update = update }
 
 model : Model
-model = Model 0 True ""
+model = Model 0 True "" "" (Date.fromTime 0) 0 ""
 
 update : Msg -> Model -> Model
 update msg model =
