@@ -1,9 +1,14 @@
 module Msg exposing ( Msg(..) )
 
+import Date exposing (Date)
+
+
 -- UPDATE
 type Msg = NoOp
-        | Increment
-        | Decrement
-        | ToggleNotifications
-        | Change String
+        | Name String
+        | Surname String
+        | Birthday Date
+        | Telephone String
+        | Email String
+        | AcceptCompanyRules
 

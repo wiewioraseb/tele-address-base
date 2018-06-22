@@ -13,20 +13,20 @@ import Msg exposing ( Msg(..) )
 view : Model -> Html Msg
 view model =
     div []
-        [ button [onClick Increment] [ text ("Add 1 to " ++ toString model.intValue) ]
-        , button [onClick Decrement] [ text ("Subtract 1 from " ++ toString model.intValue) ]
-        , checkbox ToggleNotifications "Accept company rules."
+        [ input [ placeholder "Name", onInput Name  ] [ ]
         , br [] []
-        , input [ placeholder "Name", onInput Change  ] [ ]
-        , br [] []
-        , input [ placeholder "Surname", onInput Change  ] [ ]
+        , input [ placeholder "Surname", onInput Surname  ] [ ]
         , div [] [ text (String.reverse model.surname) ]
         , br [] []
-        , input [ placeholder "Telephone", onInput Change  ] [ ]
+--        , input [ placeholder "Birthday", onInput Birthday  ] [ ]
         , br [] []
-        , input [ placeholder "Email", onInput Change  ] [ ]
+        , input [ placeholder "Telephone", onInput Telephone  ] [ ]
+        , br [] []
+        , input [ placeholder "Email", onInput Email  ] [ ]
+        , br [] []
+        , checkbox AcceptCompanyRules "Accept company rules."
         ]
-  
+
 checkbox : msg -> String -> Html msg
 checkbox msg name =
   label
