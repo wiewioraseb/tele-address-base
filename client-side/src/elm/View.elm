@@ -38,6 +38,9 @@ viewNameValidation model =
     in
         div [ style [("color", color)] ] [ text message ]
 
+https://guide.elm-lang.org/architecture/user_input/forms.html
+http://package.elm-lang.org/packages/elm-lang/core/latest/String
+Sprawdzic czy pierwsza litera jest wielka litera
 
 checkbox : msg -> String -> Html msg
 checkbox msg name =
