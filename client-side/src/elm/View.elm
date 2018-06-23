@@ -1,6 +1,8 @@
 module View exposing ( view )
 
 import Char
+import Date exposing (Date)
+import DatePicker exposing (defaultSettings)
 import Html exposing (..)
 import Html.Attributes exposing (placeholder, style, type_)
 import Html.Events exposing (onClick, onInput)
@@ -27,6 +29,14 @@ view model =
         , div [] [ text ("Look! What a funny name: " ++ (String.reverse model.surname)) ]
         , br [] []
 --        , input [ placeholder "Birthday", onInput Birthday  ] [ ]
+        , case model.date of
+            Nothing ->
+                h1 [] [ text "Pick a date" ]
+
+            Just date ->
+                h1 [] [ text (toString date) ]
+        , DatePicker.view model.date defaultSettings model.datePicker
+            |> Html.map ToDatePicker
         , br [] []
         , input [ placeholder "Telephone", onInput Telephone  ] [ ]
         , telephoneValidation model.telephone
@@ -36,6 +46,11 @@ view model =
         , br [] []
         , checkbox AcceptCompanyRules "Accept company rules."
         ]
+
+--formatDate : Date -> String
+--formatDate d =
+--    toString (Date.month d) ++ " " ++ toString (Date.day d) ++ ", " ++ toString (Date.year d)
+
 
 firstCharValidation : String -> Html msg
 firstCharValidation fieldTextContent =

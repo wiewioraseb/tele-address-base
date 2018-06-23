@@ -1,13 +1,15 @@
 module Msg exposing ( Msg(..) )
 
 import Date exposing (Date)
+import DatePicker
+
 
 
 -- UPDATE
 type Msg = NoOp
         | Name String
         | Surname String
-        | Birthday Date
+        | ToDatePicker DatePicker.Msg
         | Telephone String
         | Email String
         | AcceptCompanyRules
