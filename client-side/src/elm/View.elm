@@ -19,9 +19,11 @@ view model =
     div []
         [ input [ placeholder "Name", onInput Name  ] [ ]
         , firstCharValidation model.name
+        , minimumLengthValidation model.name
         , input [ placeholder "Surname", onInput Surname  ] [ ]
         , firstCharValidation model.surname
-        , div [] [ text (String.reverse model.surname) ]
+        , minimumLengthValidation model.surname
+        , div [] [ text ("Look! What a funny name: " ++ (String.reverse model.surname)) ]
         , br [] []
 --        , input [ placeholder "Birthday", onInput Birthday  ] [ ]
         , br [] []
@@ -35,12 +37,23 @@ view model =
 firstCharValidation : String -> Html msg
 firstCharValidation fieldTextContent =
     let
-        firstChar = fromJust (List.head (String.toList fieldTextContent))
+        firstChar = fromJustChar (List.head (String.toList fieldTextContent))
         (color, message) =
             if Char.isUpper firstChar then
                 ("green", "OK")
             else
                 ("red", "First char must be uppercase")
+    in
+        div [ style [("color", color)] ] [ text message ]
+
+minimumLengthValidation : String -> Html msg
+minimumLengthValidation fieldTextContent =
+    let
+        (color, message) =
+            if (String.length fieldTextContent) > 2 then
+                ("green", "OK")
+            else
+                ("red", "Data provided is too short")
     in
         div [ style [("color", color)] ] [ text message ]
 
@@ -53,7 +66,7 @@ checkbox msg name =
     , text name
     ]
 
-fromJust : Maybe Char -> Char
-fromJust x = case x of
+fromJustChar : Maybe Char -> Char
+fromJustChar x = case x of
     Just y -> y
     Nothing -> ' '
