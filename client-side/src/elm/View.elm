@@ -1,10 +1,14 @@
 module View exposing ( view )
 
+import Char
 import Html exposing (..)
 import Html.Attributes exposing (placeholder, style, type_)
 import Html.Events exposing (onClick, onInput)
+import List exposing (head, take)
 import Model exposing ( Model )
 import Msg exposing ( Msg(..) )
+import String exposing (toList)
+
 
 
 -- VIEW
@@ -14,8 +18,9 @@ view : Model -> Html Msg
 view model =
     div []
         [ input [ placeholder "Name", onInput Name  ] [ ]
-        , viewNameValidation model
+        , firstCharValidation model.name
         , input [ placeholder "Surname", onInput Surname  ] [ ]
+        , firstCharValidation model.surname
         , div [] [ text (String.reverse model.surname) ]
         , br [] []
 --        , input [ placeholder "Birthday", onInput Birthday  ] [ ]
@@ -27,20 +32,17 @@ view model =
         , checkbox AcceptCompanyRules "Accept company rules."
         ]
 
-viewNameValidation : Model -> Html msg
-viewNameValidation model =
+firstCharValidation : String -> Html msg
+firstCharValidation fieldTextContent =
     let
+        firstChar = fromJust (List.head (String.toList fieldTextContent))
         (color, message) =
-            if model.name == "cze" then
+            if Char.isUpper firstChar then
                 ("green", "OK")
             else
-                ("red", "Wrong name")
+                ("red", "First char must be uppercase")
     in
         div [ style [("color", color)] ] [ text message ]
-
-https://guide.elm-lang.org/architecture/user_input/forms.html
-http://package.elm-lang.org/packages/elm-lang/core/latest/String
-Sprawdzic czy pierwsza litera jest wielka litera
 
 checkbox : msg -> String -> Html msg
 checkbox msg name =
@@ -51,3 +53,7 @@ checkbox msg name =
     , text name
     ]
 
+fromJust : Maybe Char -> Char
+fromJust x = case x of
+    Just y -> y
+    Nothing -> ' '
