@@ -35,7 +35,6 @@ init =
         , phoneNumberValidation = InvalidTelephone
         , email = ""
         , emailAddressValidation = EmptyEmail
-        , acceptTerms = False
         , ready = False
         , userEntries = []
         }
@@ -82,7 +81,7 @@ update msg model =
 
     Submit ->
         if model.ready then
-            ({model | userEntries = model.userEntries ++ [(NewTeleAddressEntry model.name model.surname model.date model.telephone model.email model.acceptTerms)] }
+            ({model | userEntries = model.userEntries ++ [(NewTeleAddressEntry model.name model.surname model.date model.telephone model.email)] }
             , Cmd.none)
         else
             (model, Cmd.none)

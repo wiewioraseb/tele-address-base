@@ -20,7 +20,6 @@ type alias Model =
     , phoneNumberValidation: TelephoneStatus
     , email: String
     , emailAddressValidation: EmailStatus
-    , acceptTerms : Bool
     , ready : Bool
     , userEntries: List NewTeleAddressEntry
     }
@@ -31,5 +30,4 @@ type alias NewTeleAddressEntry =
     , date: Maybe Date
     , telephone: String
     , email: String
-    , acceptTerms : Bool
     }
