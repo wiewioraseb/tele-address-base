@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const template = new HtmlWebpackPlugin({
     title: "Tele-address base website",
     inject: false,
-  template: require('html-webpack-template'),
+    template: require('html-webpack-template'),
     links: [
         'https://fonts.googleapis.com/css?family=Roboto',
         {
@@ -15,24 +15,24 @@ const template = new HtmlWebpackPlugin({
     ],
 
     // template: 'src/index.html',
-  minify: {
-    collapseWhitespace: true,
-    preserveLineBreaks: true
-  }
+    minify: {
+        collapseWhitespace: true,
+        preserveLineBreaks: true
+    }
 })
 
 const elm = [
     {
-  test: /\.elm$/,
-  exclude: [/elm-stuff/, /node_modules/],
-  use: [{
-    loader: 'elm-webpack-loader',
-    options: {
-      verbose: true,
-      warn: true,
-      debug: true
-    }
-  }]
+        test: /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        use: [{
+            loader: 'elm-webpack-loader',
+            options: {
+                verbose: true,
+                warn: true,
+                debug: true
+            }
+        }]
     },
     {
         test: /\.css$/,
@@ -44,6 +44,6 @@ const elm = [
 ]
 
 module.exports = {
-  plugins: [template],
-  module: { rules: elm }
+    plugins: [template],
+    module: {rules: elm}
 }
