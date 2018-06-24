@@ -1,7 +1,6 @@
 module View exposing ( view )
 
 import Char
-import Date exposing (Date)
 import DatePicker exposing (defaultSettings)
 import Html exposing (..)
 import Html.Attributes exposing (placeholder, style, type_)
@@ -38,6 +37,14 @@ view model =
         , emailValidation model.email
         , br [] []
         , checkbox AcceptCompanyRules "Accept company rules."
+        , button [ onClick Submit ]
+            [ if model.ready then
+                text "Submit!"
+              else
+                text "Submit (disabled)"
+            ]
+        , br [] []
+        , div [] [ text (toString model.userEntries) ]
         ]
 
 firstCharValidation : String -> Html msg

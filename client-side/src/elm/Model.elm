@@ -1,4 +1,4 @@
-module Model exposing ( Model )
+module Model exposing ( Model, NewTeleAddressEntry )
 
 import Date exposing (Date)
 import DatePicker
@@ -20,7 +20,8 @@ type alias Model =
     , phoneNumberValidation: TelephoneStatus
     , email: String
     , emailAddressValidation: EmailStatus
-    , tickBool : Bool
+    , acceptTerms : Bool
+    , ready : Bool
     , userEntries: List NewTeleAddressEntry
     }
 
@@ -30,5 +31,5 @@ type alias NewTeleAddressEntry =
     , date: Maybe Date
     , telephone: String
     , email: String
-    , tickBool : Bool
+    , acceptTerms : Bool
     }

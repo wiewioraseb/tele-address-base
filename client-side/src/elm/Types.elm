@@ -19,6 +19,7 @@ type SurnameLengthStatus
 type TelephoneStatus
     = ValidTelephone
     | InvalidTelephone
+    | EmptyTelephone
 
 type EmailStatus
     = ValidEmail
