@@ -1,6 +1,5 @@
 module Main exposing (..)
 
-import Date exposing (Date)
 import DatePicker exposing (DateEvent(Changed), DatePicker, defaultSettings)
 import Html
 
@@ -12,34 +11,39 @@ import Msg exposing ( Msg(..) )
 -- APP
 main : Program Never Model Msg
 main =
-  Html.beginnerProgram { model = model, view = view, update = update }
+  Html.program { view = view, update = update, init = init, subscriptions = always Sub.none }
 
-model : Model
-model = Model "" "" (Just (Date.fromTime 0)) (Tuple.first DatePicker.init) "" "" True
+init : ( Model, Cmd Msg )
+init =
+    let
+        ( datePicker, datePickerFx ) =
+            DatePicker.init
+    in
+        { name = ""
+        , surname = ""
+        , date = Nothing
+        , datePicker = datePicker
+        , telephone = ""
+        , email = ""
+        , tickBool = False
+        }
+            ! [ Cmd.map ToDatePicker datePickerFx ]
 
---init : ( Model, Cmd Msg )
---init =
---    let
---        ( datePicker, datePickerFx ) =
---            DatePicker.init
---    in
---        { model | date = Nothing
---        , datePicker = datePicker
---        }
---            ! [ Cmd.map ToDatePicker datePickerFx ]
-
-update : Msg -> Model -> Model
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
 
     AcceptCompanyRules ->
-        { model | tickBool = not model.tickBool }
+        ({ model | tickBool = not model.tickBool }
+            , Cmd.none)
 
     Name newName ->
-        { model | name = newName }
+        ({ model | name = newName }
+            , Cmd.none)
 
     Surname newSurname ->
-        { model | surname = newSurname }
+        ({ model | surname = newSurname }
+            , Cmd.none)
 
     ToDatePicker newBirthday ->
         let
@@ -58,15 +62,15 @@ update msg model =
                     | date = newDate
                     , datePicker = newDatePicker
                 }
---                    ! [ Cmd.map ToDatePicker datePickerFx ]
-
-
+                    ! [ Cmd.map ToDatePicker datePickerFx ]
 
     Telephone newTelephone ->
-        { model | telephone = newTelephone }
+        ({ model | telephone = newTelephone }
+        , Cmd.none)
 
     Email newEmail ->
-        { model | email = newEmail}
+        ({ model | email = newEmail}
+        , Cmd.none)
 
     NoOp ->
-        model
+        (model, Cmd.none)
