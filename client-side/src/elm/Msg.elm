@@ -13,5 +13,5 @@ type Msg = NoOp
         | Telephone String
         | Email String
         | AcceptCompanyRules
-        | ValidationErrors Int
+        | Submit
 

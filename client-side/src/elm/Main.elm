@@ -1,11 +1,14 @@
 module Main exposing (..)
 
+import Char
 import DatePicker exposing (DateEvent(Changed), DatePicker, defaultSettings)
 import Html
 
 import View exposing ( view )
 import Model exposing ( Model )
 import Msg exposing ( Msg(..) )
+import Types exposing (EmailStatus(EmptyEmail, InvalidEmail, ValidEmail), NameFirstCharStatus(NameFirstCharIsNotUpper, NameFirstCharIsUpper), NameLengthStatus(NameTooShort), SurnameFirstCharStatus(SurnameFirstCharIsNotUpper), SurnameLengthStatus(SurnameTooShort), TelephoneStatus(InvalidTelephone))
+
 
 
 -- APP
@@ -20,13 +23,19 @@ init =
             DatePicker.init
     in
         { name = ""
+        , nameUpperCharValidation = NameFirstCharIsNotUpper
+        , nameLengthValidation = NameTooShort
         , surname = ""
+        , surnameUpperCharValidation = SurnameFirstCharIsNotUpper
+        , surnameLengthValidation = SurnameTooShort
         , date = Nothing
         , datePicker = datePicker
         , telephone = ""
+        , phoneNumberValidation = InvalidTelephone
         , email = ""
+        , emailAddressValidation = EmptyEmail
         , tickBool = False
-        , validationErrors = 0
+        , userEntries = []
         }
             ! [ Cmd.map ToDatePicker datePickerFx ]
 
@@ -39,7 +48,7 @@ update msg model =
             , Cmd.none)
 
     Name newName ->
-        ({ model | name = newName }
+        validate ({ model | name = newName }
             , Cmd.none)
 
     Surname newSurname ->
@@ -73,9 +82,56 @@ update msg model =
         ({ model | email = newEmail}
         , Cmd.none)
 
-    ValidationErrors value ->
-        ({ model | validationErrors = model.validationErrors + value}
+    Submit ->
+        (model
         , Cmd.none)
-
     NoOp ->
         (model, Cmd.none)
+
+validate (model, cmd) =
+    let
+        nameFirstChar =
+            if Char.isUpper (fromJustChar (List.head (String.toList model.name))) then
+                NameFirstCharIsUpper
+            else
+                NameFirstCharIsNotUpper
+
+
+--        emailStatus =
+--            if model.email == "" then
+--                EmptyEmail
+--            else if String.contains "@" model.email then
+--                ValidEmail
+--            else
+--                InvalidEmail
+--
+--        lengthStatus =
+--            if String.length model.password < 3 then
+--                PasswordTooShort
+--            else if String.length model.password > 120 then
+--                PasswordTooLong
+--            else
+--                ValidPassword
+--
+--        matching =
+--            model.password == model.confirmedPassword
+--
+--        ready =
+--            (passwordStatus == ValidPassword)
+--                && (emailStatus == ValidEmail)
+--                && matching
+    in
+        ({ model
+            | nameUpperCharValidation = nameFirstChar
+--            , nameLengthValidation = nameLength
+--            , surnameUpperCharValidation = surnameFirstChar
+--            , surnameLengthValidation = surnameLength
+--            , phoneNumberValidation = telephoneStatus
+--            , emailAddressValidation = emailStatus
+--            , tickBool = ready
+        }, cmd)
+
+fromJustChar : Maybe Char -> Char
+fromJustChar x = case x of
+    Just y -> y
+    Nothing -> ' '
