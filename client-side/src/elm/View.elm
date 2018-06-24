@@ -18,30 +18,38 @@ import String exposing (toList)
 -- CSS can be applied via class names or inline style attrib
 view : Model -> Html Msg
 view model =
-    div []
-        [ input [ placeholder "Name", onInput Name  ] [ ]
-        , firstCharValidation model.name
-        , minimumLengthValidation model.name
-        , input [ placeholder "Surname", onInput Surname  ] [ ]
-        , firstCharValidation model.surname
-        , minimumLengthValidation model.surname
-        , DatePicker.view model.date defaultSettings model.datePicker
-            |> Html.map ToDatePicker
-        , input [ placeholder "Telephone", onInput Telephone  ] [ ]
-        , telephoneValidation model.telephone
-        , input [ placeholder "Email", onInput Email  ] [ ]
-        , emailValidation model.email
-        , br [] []
-        , button [ onClick Submit, disabled (not model.ready) ]
-            [ if model.ready then
-                text "Submit!"
-              else
-                text "Submit (disabled)"
+    div [ ]
+        [ div [ style overalStyle ]
+            [ labelText "Name: "
+            , input [ placeholder "Name", onInput Name  ] [ ]
+            , firstCharValidation model.name
+            , minimumLengthValidation model.name
+            , labelText "Surname: "
+            , input [ placeholder "Surname", onInput Surname  ] [ ]
+            , firstCharValidation model.surname
+            , minimumLengthValidation model.surname
+            , labelText "Birthday: "
+            , DatePicker.view model.date defaultSettings model.datePicker
+                |> Html.map ToDatePicker
+            , labelText "Telephone: "
+            , input [ placeholder "Telephone", onInput Telephone  ] [ ]
+            , telephoneValidation model.telephone
+            , labelText "Emails: "
+            , input [ placeholder "Email", onInput Email  ] [ ]
+            , emailValidation model.email
+            , br [] []
+            , button [ onClick Submit, disabled (not model.ready) ]
+                [ if model.ready then
+                    text "Submit!"
+                  else
+                    text "Submit (disabled)"
+                ]
             ]
         , br [] []
         , div [] [ text (toString model.userEntries) ]
         , br [] []
         ]
+
 
 firstCharValidation : String -> Html msg
 firstCharValidation fieldTextContent =
@@ -109,7 +117,18 @@ checkbox msg name =
     , text name
     ]
 
+labelText : String -> Html msg
+labelText labelName =
+        label [] [ text labelName, br [] [] ]
+
 fromJustChar : Maybe Char -> Char
 fromJustChar x = case x of
     Just y -> y
     Nothing -> ' '
+
+overalStyle =
+    [ ( "display", "inline-block" )
+    , ( "border", "2px #111 solid" )
+    , ( "border-radius", "5px" )
+    , ( "padding", "10px 10px" )
+    ]
