@@ -8,6 +8,8 @@ git clone https://github.com/wiewioraseb/tele-address-base.git
 cd client-side
 npm i \
 npm start
+
+In a web browser navigate to http://localhost:8181
 ```
 
 # Knowledge sources
