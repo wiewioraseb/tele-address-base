@@ -28,13 +28,6 @@ view model =
         , minimumLengthValidation model.surname
         , div [] [ text ("Look! What a funny name: " ++ (String.reverse model.surname)) ]
         , br [] []
---        , input [ placeholder "Birthday", onInput Birthday  ] [ ]
-        , case model.date of
-            Nothing ->
-                h1 [] [ text "Pick a date" ]
-
-            Just date ->
-                h1 [] [ text (toString date) ]
         , DatePicker.view model.date defaultSettings model.datePicker
             |> Html.map ToDatePicker
         , br [] []
@@ -47,17 +40,14 @@ view model =
         , checkbox AcceptCompanyRules "Accept company rules."
         ]
 
---formatDate : Date -> String
---formatDate d =
---    toString (Date.month d) ++ " " ++ toString (Date.day d) ++ ", " ++ toString (Date.year d)
-
-
 firstCharValidation : String -> Html msg
 firstCharValidation fieldTextContent =
     let
         firstChar = fromJustChar (List.head (String.toList fieldTextContent))
         (color, message) =
-            if Char.isUpper firstChar then
+            if (String.length fieldTextContent) == 0 then
+                ("", "")
+            else if Char.isUpper firstChar then
                 ("green", "OK")
             else
                 ("red", "First char must be uppercase")
@@ -68,7 +58,9 @@ minimumLengthValidation : String -> Html msg
 minimumLengthValidation fieldTextContent =
     let
         (color, message) =
-            if (String.length fieldTextContent) > 2 then
+            if (String.length fieldTextContent) == 0 then
+                ("", "")
+            else if (String.length fieldTextContent) > 2 then
                 ("green", "OK")
             else
                 ("red", "Data provided is too short")
@@ -78,11 +70,13 @@ minimumLengthValidation fieldTextContent =
 telephoneValidation : String -> Html msg
 telephoneValidation fieldTextContent =
     let
-        telephoneNumber = (String.toList fieldTextContent)
+        invalidTeleCharList = (String.toList fieldTextContent)
             |> List.filter (\x-> x /= '-')
             |> List.filter (\x-> not (Char.isDigit x))
         (color, message) =
-            if (List.length telephoneNumber) == 0 then
+            if (String.length fieldTextContent) == 0 then
+                ("", "")
+            else if (List.length invalidTeleCharList) == 0 then
                 ("green", "OK")
             else
                 ("red", "Telephone number can't consist of alphabetic characters and special sign except for '-'")
@@ -94,7 +88,9 @@ emailValidation fieldTextContent =
     let
         (color, message) =
             -- basic regex email validation
-            if Regex.contains (regex "^\\S+@\\S+\\.\\S+$") fieldTextContent then
+            if (String.length fieldTextContent) == 0 then
+                ("", "")
+            else if Regex.contains (regex "^\\S+@\\S+\\.\\S+$") fieldTextContent then
                 ("green", "OK")
             else
                 ("red", "Please, provide a valid email address")
