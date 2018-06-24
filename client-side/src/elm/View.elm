@@ -128,11 +128,16 @@ renderEntry entry =
     children =
       [ li [] [ text entry.name ]
       , li [] [ text entry.surname ]
-      , li [] [ text (toString entry.date) ]
+      , li [] [ text (fromJust entry.date) ]
       , li [] [ text entry.telephone ]
       , li [] [ text entry.email ] ]
   in
     ul [] children
+
+fromJust : Maybe Date -> String
+fromJust x = case x of
+    Just y -> (toString (Date.year y)) ++ "/" ++ (toString (Date.month y)) ++ "/" ++ (toString (Date.day y))
+    Nothing -> " "
 
 overalStyle =
     [ ( "display", "inline-block" )
