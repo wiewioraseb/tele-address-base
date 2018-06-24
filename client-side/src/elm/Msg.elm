@@ -12,6 +12,5 @@ type Msg = NoOp
         | ToDatePicker DatePicker.Msg
         | Telephone String
         | Email String
-        | AcceptCompanyRules
         | Submit
 

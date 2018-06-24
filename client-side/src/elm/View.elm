@@ -36,7 +36,6 @@ view model =
         , input [ placeholder "Email", onInput Email  ] [ ]
         , emailValidation model.email
         , br [] []
-        , checkbox AcceptCompanyRules "Accept company rules."
         , button [ onClick Submit ]
             [ if model.ready then
                 text "Submit!"

@@ -4,6 +4,7 @@ import Char
 import DatePicker exposing (DateEvent(Changed), DatePicker, defaultSettings)
 import Html
 
+import Regex exposing (regex)
 import View exposing ( view )
 import Model exposing (Model, NewTeleAddressEntry)
 import Msg exposing ( Msg(..) )
@@ -43,10 +44,6 @@ init =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
-
-    AcceptCompanyRules ->
-        ({ model | acceptTerms = not model.acceptTerms }
-            , Cmd.none)
 
     Name newName ->
         validate ({ model | name = newName }
@@ -133,11 +130,10 @@ validate (model, cmd) =
         emailStatus =
             if model.email == "" then
                 EmptyEmail
-            else if String.contains "@" model.email then
+            else if Regex.contains (regex "^\\S+@\\S+\\.\\S+$") model.email then
                 ValidEmail
             else
                 InvalidEmail
-
 
         ready =
             (nameFirstChar == NameFirstCharIsUpper)
@@ -155,7 +151,6 @@ validate (model, cmd) =
             , surnameLengthValidation = surnameLengthStatus
             , phoneNumberValidation = telephoneStatus
             , emailAddressValidation = emailStatus
---            , acceptTerms = ticked
             , ready = ready
         }, cmd)
 
