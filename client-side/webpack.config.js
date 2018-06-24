@@ -5,16 +5,6 @@ const template = new HtmlWebpackPlugin({
     title: "Tele-address base website",
     inject: false,
     template: require('html-webpack-template'),
-    links: [
-        'https://fonts.googleapis.com/css?family=Roboto',
-        {
-            href: 'css/elm-datepicker.css',
-            rel: 'stylesheet',
-            type: 'text/css'
-        }
-    ],
-
-    // template: 'src/index.html',
     minify: {
         collapseWhitespace: true,
         preserveLineBreaks: true
