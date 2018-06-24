@@ -81,8 +81,11 @@ update msg model =
         , Cmd.none)
 
     Submit ->
-        ({model | userEntries = model.userEntries ++ [(NewTeleAddressEntry model.name model.surname model.date model.telephone model.email model.acceptTerms)] }
-        , Cmd.none)
+        if model.ready then
+            ({model | userEntries = model.userEntries ++ [(NewTeleAddressEntry model.name model.surname model.date model.telephone model.email model.acceptTerms)] }
+            , Cmd.none)
+        else
+            (model, Cmd.none)
     NoOp ->
         (model, Cmd.none)
 
