@@ -1,6 +1,7 @@
 module View exposing ( view )
 
 import Char
+import Date exposing (Date)
 import DatePicker exposing (defaultSettings)
 import Html exposing (..)
 import Html.Attributes exposing (disabled, placeholder, style, type_)
@@ -24,16 +25,20 @@ view model =
             , input [ placeholder "Name", onInput Name  ] [ ]
             , firstCharValidation model.name
             , minimumLengthValidation model.name
+                    , br [] []
             , labelText "Surname: "
             , input [ placeholder "Surname", onInput Surname  ] [ ]
             , firstCharValidation model.surname
             , minimumLengthValidation model.surname
+                    , br [] []
             , labelText "Birthday: "
             , DatePicker.view model.date defaultSettings model.datePicker
                 |> Html.map ToDatePicker
+                    , br [] []
             , labelText "Telephone: "
             , input [ placeholder "Telephone", onInput Telephone  ] [ ]
             , telephoneValidation model.telephone
+                    , br [] []
             , labelText "Emails: "
             , input [ placeholder "Email", onInput Email  ] [ ]
             , emailValidation model.email
@@ -45,9 +50,7 @@ view model =
                     text "Submit (disabled)"
                 ]
             ]
-        , br [] []
-        , div [] [ text (toString model.userEntries) ]
-        , br [] []
+        , div [ style (resultStyle model.userEntries) ] ( showTeleAddressData model.userEntries )
         ]
 
 
@@ -108,15 +111,6 @@ emailValidation fieldTextContent =
     in
         div [ style [("color", color)] ] [ text message ]
 
-checkbox : msg -> String -> Html msg
-checkbox msg name =
-  label
-    [ style [("padding", "20px")]
-    ]
-    [ input [ type_ "checkbox", onClick msg ] []
-    , text name
-    ]
-
 labelText : String -> Html msg
 labelText labelName =
         label [] [ text labelName, br [] [] ]
@@ -126,9 +120,34 @@ fromJustChar x = case x of
     Just y -> y
     Nothing -> ' '
 
+showTeleAddressData listOfEntries =
+    List.map renderEntry listOfEntries
+
+renderEntry entry =
+  let
+    children =
+      [ li [] [ text entry.name ]
+      , li [] [ text entry.surname ]
+      , li [] [ text (toString entry.date) ]
+      , li [] [ text entry.telephone ]
+      , li [] [ text entry.email ] ]
+  in
+    ul [] children
+
 overalStyle =
     [ ( "display", "inline-block" )
     , ( "border", "2px #111 solid" )
     , ( "border-radius", "5px" )
     , ( "padding", "10px 10px" )
     ]
+
+resultStyle entries =
+    if List.length entries > 0 then
+        [ ( "margin", "auto" )
+        , ( "border", "2px #111 solid" )
+        , ( "width", "50%" )
+        , ( "border-radius", "5px" )
+        , ( "padding", "10px 10px" )
+        ]
+    else
+        [ ("display", "none") ]
