@@ -3,7 +3,7 @@ module View exposing ( view )
 import Char
 import DatePicker exposing (defaultSettings)
 import Html exposing (..)
-import Html.Attributes exposing (placeholder, style, type_)
+import Html.Attributes exposing (disabled, placeholder, style, type_)
 import Html.Events exposing (onClick, onInput)
 import List exposing (head, take)
 import Model exposing ( Model )
@@ -25,18 +25,14 @@ view model =
         , input [ placeholder "Surname", onInput Surname  ] [ ]
         , firstCharValidation model.surname
         , minimumLengthValidation model.surname
-        , div [] [ text ("Look! What a funny name: " ++ (String.reverse model.surname)) ]
-        , br [] []
         , DatePicker.view model.date defaultSettings model.datePicker
             |> Html.map ToDatePicker
-        , br [] []
         , input [ placeholder "Telephone", onInput Telephone  ] [ ]
         , telephoneValidation model.telephone
-        , br [] []
         , input [ placeholder "Email", onInput Email  ] [ ]
         , emailValidation model.email
         , br [] []
-        , button [ onClick Submit ]
+        , button [ onClick Submit, disabled (not model.ready) ]
             [ if model.ready then
                 text "Submit!"
               else
@@ -44,6 +40,7 @@ view model =
             ]
         , br [] []
         , div [] [ text (toString model.userEntries) ]
+        , br [] []
         ]
 
 firstCharValidation : String -> Html msg
