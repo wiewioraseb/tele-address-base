@@ -2,15 +2,27 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // Generate OneWeb-like HTML
 const template = new HtmlWebpackPlugin({
-  inject: false,
+    title: "Tele-address base website",
+    inject: false,
   template: require('html-webpack-template'),
+    links: [
+        'https://fonts.googleapis.com/css?family=Roboto',
+        {
+            href: 'css/elm-datepicker.css',
+            rel: 'stylesheet',
+            type: 'text/css'
+        }
+    ],
+
+    // template: 'src/index.html',
   minify: {
     collapseWhitespace: true,
     preserveLineBreaks: true
   }
 })
 
-const elm = {
+const elm = [
+    {
   test: /\.elm$/,
   exclude: [/elm-stuff/, /node_modules/],
   use: [{
@@ -21,9 +33,17 @@ const elm = {
       debug: true
     }
   }]
-}
+    },
+    {
+        test: /\.css$/,
+        use: [
+            'style-loader',
+            'css-loader',
+        ]
+    }
+]
 
 module.exports = {
   plugins: [template],
-  module: { rules: [elm] }
+  module: { rules: elm }
 }
