@@ -13,4 +13,5 @@ type alias Model =
     , telephone: String
     , email: String
     , tickBool : Bool
+    , validationErrors : Int
     }

@@ -26,6 +26,7 @@ init =
         , telephone = ""
         , email = ""
         , tickBool = False
+        , validationErrors = 0
         }
             ! [ Cmd.map ToDatePicker datePickerFx ]
 
@@ -70,6 +71,10 @@ update msg model =
 
     Email newEmail ->
         ({ model | email = newEmail}
+        , Cmd.none)
+
+    ValidationErrors value ->
+        ({ model | validationErrors = model.validationErrors + value}
         , Cmd.none)
 
     NoOp ->
